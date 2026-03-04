@@ -3,7 +3,22 @@ import { Button, KIND } from "baseui/button";
 
 import { Card, StyledBody, StyledAction } from "baseui/card";
 
-export default function MenuItem(props) {
+export type RestaurantItem = {
+  imageUrl: string;
+  title: string;
+  priceTagline: string;
+  itemDescription?: string;
+  priceAmount: number;
+};
+
+type AddToCart = (item: RestaurantItem) => void;
+
+type MenuItemProps = {
+  addToCart: AddToCart;
+  item: RestaurantItem;
+};
+
+export default function MenuItem(props: MenuItemProps) {
   const { addToCart, item } = props;
 
   return (

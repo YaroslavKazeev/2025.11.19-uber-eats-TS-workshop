@@ -4,22 +4,22 @@ import { ButtonGroup } from "baseui/button-group";
 
 import { FlexGrid } from "baseui/flex-grid";
 import Cart from "./Cart";
-import MenuItem from "./MenuItem";
+import MenuItem, { RestaurantItem } from "./MenuItem";
 import { getRestaurantItems } from "../utils/getRestaurantData";
 
-export default function RestauranView() {
+export default function RestaurantView() {
   const [viewCart, setViewCart] = React.useState(false);
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart] = React.useState<RestaurantItem[]>([]);
 
   const restaurantItems = getRestaurantItems();
 
-  const addToCart = (item) => {
+  const addToCart = (item: RestaurantItem) => {
     setCart([...cart, item]);
   };
 
-  let totalPrice = 0;
+  let totalPrice: number = 0;
   cart.forEach((item) => {
-    totalPrice += item.priceTagline;
+    totalPrice += item.priceAmount;
   });
 
   return (
@@ -49,8 +49,8 @@ export default function RestauranView() {
       </ButtonGroup>
 
       <FlexGrid>
-        {restaurantItems.map((item) => (
-          <MenuItem item={item} />
+        {restaurantItems.map((item, index) => (
+          <MenuItem key={index} item={item} addToCart={addToCart} />
         ))}
       </FlexGrid>
 
